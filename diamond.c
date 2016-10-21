@@ -4,6 +4,7 @@
 
 int nbConfigurations;
 
+
 /**********************************
    functions to mangage the board
 ***********************************/
