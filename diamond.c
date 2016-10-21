@@ -21,12 +21,14 @@ board_t* createBoard()
   return b;
 }
 
-void clearBoard(board_t* b) {
+void clearBoard(board_t* b)
+{
   /* A COMPLETER : cf. canevas Java
    */
 }
 
-int voidCellIndex(board_t* b) {
+int voidCellIndex(board_t* b)
+{
   int id = -1;
   /* A COMPLETER : cf. canevas Java
 
