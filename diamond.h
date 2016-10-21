@@ -4,8 +4,11 @@
 /* define and struct for the board */
 #define VOID_CELL -1
 #define NO_NEIGHBOR -1
+#define BOARD_LENGTH 13
+#define NEIGHBORS_LENGTH 6
 
-typedef struct gameboard {
+typedef struct gameboard
+{
   char board[13];
   char neighbors[13][6];
   int blueScore;
@@ -23,7 +26,8 @@ typedef struct gameboard {
    refer to the subject of the project from some explanations about
    the struct node** children field used below   
  */
-typedef struct node {
+typedef struct node
+{
   char idCell; // NB : a char is sufficient because the board has 13 cells.
   char turn; // NB : a char is sufficent because there are at most 12 turns.
   char result;
@@ -32,7 +36,8 @@ typedef struct node {
 } node_t;
 
 
-typedef struct tree {
+typedef struct tree
+{
   node_t* root;
 } tree_t;
 
