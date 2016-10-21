@@ -143,90 +143,126 @@ void setPawn(board_t* b, int idCell, char value)
    functions to mangage the nodes
 ***********************************/
 
-node_t* createNode(int idCell, int turn) {
-  node_t* n = NULL;
-  /* A COMPLETER :
-     - allouer l'espace mémoire pour un node_t et mettre son adresse dans n
-     - initialiser les champs idCell, turn, result, nbChildren (cf. canevas Java)
-     - allouer l'espace mémoire pour children en fonction de turn (cf. canevas Java et énoncé)
-  */
-  return n;
+/**
+ *  A COMPLETER :
+ *   - allouer l'espace mémoire pour un node_t et mettre son adresse dans n
+ *   - initialiser les champs idCell, turn, result, nbChildren (cf. canevas Java)
+ *   - allouer l'espace mémoire pour children en fonction de turn (cf. canevas Java et énoncé)
+ * @param idCell
+ * @param turn
+ * @return
+ */
+node_t* createNode(int idCell, int turn)
+{
+    node_t* n = NULL;
+    n = (node_t*)malloc(sizeof(node_t));
+    n->idCell = (char)idCell;
+    n->turn = (char)turn;
+    if(turn == 1)
+        n->children = (node_t**)malloc(sizeof(node_t));
+    else if(turn<12)
+        n->children = (node_t**)malloc(sizeof(node_t)*(13-turn));
+    else
+        n->nbChildren = NULL;
+    n->nbChildren = 0;
+    n->result = NO_RESULT;
+
+    return n;
 }
 
-node_t* addChild(node_t* n, int idCell) {
-  node_t* child = NULL;
-  /* A COMPLETER : 
-     - créer un nouveau noeud child avec comme paramètre idCell et n->turn+1
-     - ajouter child aux fils de n et incrémenter son nombre de fils     
-  */
-  return child;
+/**
+ * A COMPLETER :
+ *   - créer un nouveau noeud child avec comme paramètre idCell et n->turn+1
+ *   - ajouter child aux fils de n et incrémenter son nombre de fils
+ * @param n
+ * @param idCell
+ * @return
+ */
+node_t* addChild(node_t* n, int idCell)
+{
+    node_t* child = NULL;
+    child = createNode(idCell, n->turn+1);
+    n->children[n->nbChildren] = child;
+    n->nbChildren = (char)(n->nbChildren+1);
+
+    return child;
 }
 
 /**********************************
    functions to mangage the tree
 ***********************************/
 
-tree_t* createTree() {
+/**
+ * A COMPLETER :
+ *     - allouer l'espace mémoire pour un tree_t et mettre son adresse dans t
+ *     - initialiser le champ root
+ * @return
+ */
+tree_t* createTree()
+{
+    tree_t* t = NULL;
+    t = (tree_t*)malloc(sizeof(tree_t));
+    t->root = NULL;
+    nbConfigurations =0;
 
-  tree_t* t = NULL;
-  /* A COMPLETER :
-     - allouer l'espace mémoire pour un tree_t et mettre son adresse dans t
-     - initialiser le champ root
-  */
-
-  return t;
+    return t;
 }
 
-
+/**
+ * A COMPLETER : cf. canevas Java
+ * @param t
+ * @param b
+ * @param idCell
+ */
 void setFirstBlueChoice(tree_t* t, board_t* b, int idCell)
 {
-  /* A COMPLETER : cf. canevas Java
-  */
+    t->root = createNode(idCell,1);
+    setPawn(b,idCell,1);
 }
 
 void setFirstRedChoice(tree_t* t, board_t* b, int idCell)
 {
-  /* A COMPLETER : cf. canevas Java
-   */  
+    /* A COMPLETER : cf. canevas Java
+     */
 }
 
 void buildTree(tree_t* t, board_t* b)
 {
-  /* A COMPLETER : cf. canevas Java
-  */
+    /* A COMPLETER : cf. canevas Java
+    */
 }
 
 void computePossibilities(node_t* n, board_t* b)
 {
 
-  /* A COMPLETER : cf. canevas Java
-  */
+    /* A COMPLETER : cf. canevas Java
+    */
 
 }
 
 int computeBlueVictories(node_t* n)
 {
-  int nb = 0;
-  /* A COMPLETER :
-  */
-  return nb;
+    int nb = 0;
+    /* A COMPLETER :
+    */
+    return nb;
 }
 
 int computeRedVictories(node_t* n)
 {
-  int nb = 0;
-  /* A COMPLETER :
-  */
-  return nb;
+    int nb = 0;
+    /* A COMPLETER :
+    */
+    return nb;
 
 }
 
 int computeDraws(node_t* n)
 {
-  int nb = 0;
-  /* A COMPLETER :
-  */
-  return nb;
+    int nb = 0;
+    /* A COMPLETER :
+    */
+    return nb;
 
 }
 
