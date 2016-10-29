@@ -208,12 +208,6 @@ tree_t* createTree()
     return t;
 }
 
-/**
- * A COMPLETER : cf. canevas Java
- * @param t
- * @param b
- * @param idCell
- */
 void setFirstBlueChoice(tree_t* t, board_t* b, int idCell)
 {
     t->root = createNode(idCell,1);
@@ -222,21 +216,52 @@ void setFirstBlueChoice(tree_t* t, board_t* b, int idCell)
 
 void setFirstRedChoice(tree_t* t, board_t* b, int idCell)
 {
-    /* A COMPLETER : cf. canevas Java
-     */
+    t->root->children[t->root->nbChildren+1] = createNode(idCell,1);
+    t->root->nbChildren = (char)(t->root->nbChildren+1);
+    setPawn(b,idCell,7);
 }
 
 void buildTree(tree_t* t, board_t* b)
 {
-    /* A COMPLETER : cf. canevas Java
-    */
+    nbConfigurations = 0;
+    node_t* n = t->root->children[0];
+    computePossibilities(n, b);
+
+    printf(" done.\n");
 }
 
 void computePossibilities(node_t* n, board_t* b)
 {
+    if(n->turn == 12)
+    {
+        computeScore(b);
+        int rs = b->redScore;
+        int bs = b->blueScore;
+        if(bs == rs)
+            n->result = DRAW_PARTY;
+        else if(bs < rs)
+            n->result = BLUE_WINS;
+        else
+            n->result = RED_WINS;
+        nbConfigurations += 1;
+        if((nbConfigurations % 1000000) == 0)
+            printf(".\n");
+        return;
+    }
 
-    /* A COMPLETER : cf. canevas Java
-    */
+    int nextPawnValue = (n->turn+2)/2;
+    if((n->turn+1)%2 == 0)
+        nextPawnValue += 6;
+    for(int i=0; i<13; i++)
+    {
+        if(b->board[i] == VOID_CELL)
+        {
+            setPawn(b, i, (char)nextPawnValue);
+            node_t* child = addChild(n, i);
+            computePossibilities(child, b);
+            setPawn(b, i, VOID_CELL);
+        }
+    }
 
 }
 
