@@ -268,16 +268,18 @@ void computePossibilities(node_t* n, board_t* b)
 int computeBlueVictories(node_t* n)
 {
     int nb = 0;
-    /* A COMPLETER :
-    */
+    if(n->turn == 12 && n->result == BLUE_WINS)
+        return 1;
+    if(n->result == RED_WINS || n->result == DRAW_PARTY)
+        return 0;
     return nb;
 }
 
 int computeRedVictories(node_t* n)
 {
     int nb = 0;
-    /* A COMPLETER :
-    */
+    if (n->turn == 12 && n->result == RED_WINS) return 1;
+    if (n->result == BLUE_WINS || n->result == DRAW_PARTY) return 0;
     return nb;
 
 }
@@ -285,10 +287,9 @@ int computeRedVictories(node_t* n)
 int computeDraws(node_t* n)
 {
     int nb = 0;
-    /* A COMPLETER :
-    */
+    if (n->turn == 12 && n->result == DRAW_PARTY) return 1;
+    if (n->result == RED_WINS || n->result == BLUE_WINS) return 0;
     return nb;
-
 }
 
 
