@@ -24,7 +24,7 @@ board_t* createBoard()
     int i,j;
     board_t* b = NULL;
     b = malloc(sizeof(board_t));
-        clearBoard(b);
+    clearBoard(b);
     b->neighbors;
     for (i=0;i<BOARD_LENGTH;i++)
         for (j=0;j<NEIGHBORS_LENGTH;j++)
@@ -96,7 +96,7 @@ board_t* createBoard()
     b->neighbors[12][0] = 10;
     b->neighbors[12][1] = 11;
 
-  return b;
+    return b;
 }
 
 void clearBoard(board_t* b)
@@ -109,7 +109,7 @@ void clearBoard(board_t* b)
 
 int voidCellIndex(board_t* b)
 {
-  int id = -1;
+    int id = -1;
     for(int i=0;i<BOARD_LENGTH;i++)
         if (b->board[i] == VOID_CELL)
             return i;
@@ -135,7 +135,7 @@ void computeScore(board_t* b)
 
 void setPawn(board_t* b, int idCell, char value)
 {
-  b->board[idCell] = value;
+    b->board[idCell] = value;
 }
 
 
@@ -159,9 +159,9 @@ node_t* createNode(int idCell, int turn)
     n->idCell = (char)idCell;
     n->turn = (char)turn;
     if(turn == 1)
-        n->children = (node_t**)malloc(sizeof(node_t));
+        n->children = (node_t**)malloc(sizeof(node_t*));
     else if(turn<12)
-        n->children = (node_t**)malloc(sizeof(node_t)*(13-turn));
+        n->children = (node_t**)malloc(sizeof(node_t*)*(13-turn));
     else
         n->nbChildren = NULL;
     n->nbChildren = 0;
@@ -211,6 +211,7 @@ tree_t* createTree()
 void setFirstBlueChoice(tree_t* t, board_t* b, int idCell)
 {
     t->root = createNode(idCell,1);
+    printf("Tout est ok");
     setPawn(b,idCell,1);
 }
 
