@@ -101,7 +101,8 @@ board_t* createBoard()
 
 void clearBoard(board_t* b)
 {
-    for(int i=0;i<BOARD_LENGTH;i++)
+    int i;
+    for(i=0;i<BOARD_LENGTH;i++)
         b->board[i] = VOID_CELL;
     b->blueScore = 0;
     b->redScore = 0;
@@ -109,8 +110,9 @@ void clearBoard(board_t* b)
 
 int voidCellIndex(board_t* b)
 {
+    int i;
     int id = -1;
-    for(int i=0;i<BOARD_LENGTH;i++)
+    for(i=0;i<BOARD_LENGTH;i++)
         if (b->board[i] == VOID_CELL)
             return i;
     return id; // abnormal case.
@@ -122,7 +124,8 @@ void computeScore(board_t* b)
     b->blueScore = 0;
     b->redScore = 0;
     int idVoid = voidCellIndex(b);
-    for(int i=0;i<NEIGHBORS_LENGTH;i++)
+    int i;
+    for(i=0;i<NEIGHBORS_LENGTH;i++)
         if (b->neighbors[idVoid][i] != NO_NEIGHBOR)
             if (b->board[b->neighbors[idVoid][i]] <= NEIGHBORS_LENGTH)
             {
@@ -254,7 +257,8 @@ void computePossibilities(node_t* n, board_t* b)
     int nextPawnValue = (n->turn+2)/2;
     if((n->turn+1)%2 == 0)
         nextPawnValue += 6;
-    for(int i=0; i<13; i++)
+    int i;
+    for(i=0; i<13; i++)
     {
         if(b->board[i] == VOID_CELL)
         {
@@ -293,5 +297,16 @@ int computeDraws(node_t* n)
     if (n->result == RED_WINS || n->result == BLUE_WINS) return 0;
     return nb;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
