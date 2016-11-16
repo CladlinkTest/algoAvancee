@@ -4,7 +4,7 @@
 int main(int argc, char** argv)
 {
 
-    fprintf(stdout, "coucou1");
+    printf("coucou");
     board_t* b = createBoard();
     tree_t* t = createTree();
     int idCellBlue = 1;

@@ -110,11 +110,10 @@ void clearBoard(board_t* b)
 int voidCellIndex(board_t* b)
 {
     int i;
-    int id = -1;
     for(i=0;i<BOARD_LENGTH;i++)
         if (b->board[i] == VOID_CELL)
             return i;
-    return id; // abnormal case.
+    return -1; // abnormal case.
 }
 
 void computeScore(board_t* b)
@@ -160,7 +159,7 @@ void setPawn(board_t* b, int idCell, char value)
 node_t* createNode(int idCell, int turn)
 {
     node_t* n = NULL;
-    n = (node_t*)malloc(sizeof(node_t));
+    n = malloc(sizeof(node_t));
     n->idCell = (char)idCell;
     n->turn = (char)turn;
     if(turn == 1)
@@ -168,7 +167,7 @@ node_t* createNode(int idCell, int turn)
     else if(turn<12)
         n->children = (node_t**)malloc(sizeof(node_t*)*(13-turn));
     else
-        n->nbChildren = NULL;
+        n->children = NULL;
     n->nbChildren = 0;
     n->result = NO_RESULT;
 
@@ -187,8 +186,8 @@ node_t* addChild(node_t* n, int idCell)
 {
     node_t* child = NULL;
     child = createNode(idCell, n->turn+1);
-    n->children[(int)n->nbChildren] = child;
-    n->nbChildren = (char)(n->nbChildren+1);
+    n->children[n->nbChildren] = child;
+    n->nbChildren = (char) (n->nbChildren + 1);
 
     return child;
 }
@@ -206,7 +205,7 @@ node_t* addChild(node_t* n, int idCell)
 tree_t* createTree()
 {
     tree_t* t = NULL;
-    t = (tree_t*)malloc(sizeof(tree_t));
+    t = malloc(sizeof(tree_t));
     t->root = NULL;
     nbConfigurations =0;
 
@@ -230,7 +229,7 @@ void setFirstRedChoice(tree_t* t, board_t* b, int idCell)
 void buildTree(tree_t* t, board_t* b)
 {
     nbConfigurations = 0;
-    node_t* n = t->root->children[0];
+    node_t* n = t->root->children[0]; // n = premier fils de root
     computePossibilities(n, b);
 
     printf(" done.\n");
