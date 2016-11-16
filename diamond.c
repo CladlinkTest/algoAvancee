@@ -25,7 +25,6 @@ board_t* createBoard()
     board_t* b = NULL;
     b = malloc(sizeof(board_t));
     clearBoard(b);
-    b->neighbors;
     for (i=0;i<BOARD_LENGTH;i++)
         for (j=0;j<NEIGHBORS_LENGTH;j++)
             b->neighbors[i][j] = NO_NEIGHBOR;
@@ -127,14 +126,16 @@ void computeScore(board_t* b)
     int i;
     for(i=0;i<NEIGHBORS_LENGTH;i++)
         if (b->neighbors[idVoid][i] != NO_NEIGHBOR)
-            if (b->board[b->neighbors[idVoid][i]] <= NEIGHBORS_LENGTH)
+        {
+            if (b->board[(int)b->neighbors[idVoid][i]] <= NEIGHBORS_LENGTH)
             {
-                b->blueScore += b->board[b->neighbors[idVoid][i]];
+                b->blueScore += b->board[(int)b->neighbors[idVoid][i]];
             }
             else
             {
-                b->redScore += (b->board[b->neighbors[idVoid][i]]-NEIGHBORS_LENGTH);
+                b->redScore += (b->board[(int)b->neighbors[idVoid][i]] - NEIGHBORS_LENGTH);
             }
+        }
 }
 
 void setPawn(board_t* b, int idCell, char value)
@@ -186,7 +187,7 @@ node_t* addChild(node_t* n, int idCell)
 {
     node_t* child = NULL;
     child = createNode(idCell, n->turn+1);
-    n->children[n->nbChildren] = child;
+    n->children[(int)n->nbChildren] = child;
     n->nbChildren = (char)(n->nbChildren+1);
 
     return child;
