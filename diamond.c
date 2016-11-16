@@ -233,6 +233,7 @@ void buildTree(tree_t* t, board_t* b)
     computePossibilities(n, b);
 
     printf(" done.\n");
+
 }
 
 void computePossibilities(node_t* n, board_t* b)
