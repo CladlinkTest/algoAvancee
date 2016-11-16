@@ -3,6 +3,7 @@
 
 int main(int argc, char** argv)
 {
+
     fprintf(stdout, "coucou1");
     board_t* b = createBoard();
     tree_t* t = createTree();

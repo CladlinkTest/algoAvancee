@@ -118,6 +118,7 @@ int voidCellIndex(board_t* b)
 
 void computeScore(board_t* b)
 {
+
     b->blueScore = 0;
     b->redScore = 0;
     int idVoid = voidCellIndex(b);
