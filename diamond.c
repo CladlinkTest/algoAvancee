@@ -163,9 +163,9 @@ node_t* createNode(int idCell, int turn)
     n->idCell = (char)idCell;
     n->turn = (char)turn;
     if(turn == 1)
-        n->children = (node_t**)malloc(sizeof(node_t*));
+        n->children = malloc(sizeof(node_t*));
     else if(turn<12)
-        n->children = (node_t**)malloc(sizeof(node_t*)*(13-turn));
+        n->children = malloc(sizeof(node_t*)*(13-turn));
     else
         n->children = NULL;
     n->nbChildren = 0;
@@ -173,7 +173,6 @@ node_t* createNode(int idCell, int turn)
 
     return n;
 }
-
 /**
  * A COMPLETER :
  *   - créer un nouveau noeud child avec comme paramètre idCell et n->turn+1
@@ -206,7 +205,6 @@ tree_t* createTree()
 {
     tree_t* t = NULL;
     t = malloc(sizeof(tree_t));
-    t->root = NULL;
     nbConfigurations =0;
 
     return t;
@@ -221,7 +219,7 @@ void setFirstBlueChoice(tree_t* t, board_t* b, int idCell)
 
 void setFirstRedChoice(tree_t* t, board_t* b, int idCell)
 {
-    t->root->children[t->root->nbChildren+1] = createNode(idCell,1);
+    t->root->children[t->root->nbChildren] = createNode(idCell,1);
     t->root->nbChildren = (char)(t->root->nbChildren+1);
     setPawn(b,idCell,7);
 }
@@ -238,7 +236,7 @@ void buildTree(tree_t* t, board_t* b)
 
 void computePossibilities(node_t* n, board_t* b)
 {
-    if(n->turn == 12)
+    if(n != NULL && n->turn == 12)
     {
         computeScore(b);
         int rs = b->redScore;
