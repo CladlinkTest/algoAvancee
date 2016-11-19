@@ -126,13 +126,13 @@ void computeScore(board_t* b)
     for(i=0;i<NEIGHBORS_LENGTH;i++)
         if (b->neighbors[idVoid][i] != NO_NEIGHBOR)
         {
-            if (b->board[(int)b->neighbors[idVoid][i]] <= NEIGHBORS_LENGTH)
+            if (b->board[(int)b->neighbors[idVoid][i]] <= 6)
             {
                 b->blueScore += b->board[(int)b->neighbors[idVoid][i]];
             }
             else
             {
-                b->redScore += (b->board[(int)b->neighbors[idVoid][i]] - NEIGHBORS_LENGTH);
+                b->redScore += (b->board[(int)b->neighbors[idVoid][i]] - 6);
             }
         }
 }
@@ -170,7 +170,6 @@ node_t* createNode(int idCell, int turn)
         n->children = NULL;
     n->nbChildren = 0;
     n->result = NO_RESULT;
-
     return n;
 }
 /**
@@ -205,6 +204,7 @@ tree_t* createTree()
 {
     tree_t* t = NULL;
     t = malloc(sizeof(tree_t));
+    t->root = NULL;
     nbConfigurations =0;
 
     return t;
@@ -213,14 +213,12 @@ tree_t* createTree()
 void setFirstBlueChoice(tree_t* t, board_t* b, int idCell)
 {
     t->root = createNode(idCell,1);
-    printf("Tout est ok");
     setPawn(b,idCell,1);
 }
 
 void setFirstRedChoice(tree_t* t, board_t* b, int idCell)
 {
-    t->root->children[t->root->nbChildren] = createNode(idCell,1);
-    t->root->nbChildren = (char)(t->root->nbChildren+1);
+    addChild(t->root, idCell);
     setPawn(b,idCell,7);
 }
 
@@ -230,13 +228,12 @@ void buildTree(tree_t* t, board_t* b)
     node_t* n = t->root->children[0]; // n = premier fils de root
     computePossibilities(n, b);
 
-    printf(" done.\n");
-
+        printf(" done.\n");
 }
 
 void computePossibilities(node_t* n, board_t* b)
 {
-    if(n != NULL && n->turn == 12)
+    if(n->turn == 12)
     {
         computeScore(b);
         int rs = b->redScore;
@@ -272,40 +269,30 @@ void computePossibilities(node_t* n, board_t* b)
 
 int computeBlueVictories(node_t* n)
 {
-    int nb = 0;
+    int nb = 0, i;
     if(n->turn == 12 && n->result == BLUE_WINS)
         return 1;
-    if(n->result == RED_WINS || n->result == DRAW_PARTY)
-        return 0;
+    for (i = 0; i < n->nbChildren; i++)
+        nb += computeBlueVictories(n->children[i]);
     return nb;
 }
 
 int computeRedVictories(node_t* n)
 {
-    int nb = 0;
-    if (n->turn == 12 && n->result == RED_WINS) return 1;
-    if (n->result == BLUE_WINS || n->result == DRAW_PARTY) return 0;
+    int nb = 0, i;
+    if (n->turn == 12 && n->result == RED_WINS)
+        return 1;
+    for (i = 0; i < n->nbChildren; i++)
+        nb += computeRedVictories(n->children[i]);
     return nb;
-
 }
 
 int computeDraws(node_t* n)
 {
-    int nb = 0;
-    if (n->turn == 12 && n->result == DRAW_PARTY) return 1;
-    if (n->result == RED_WINS || n->result == BLUE_WINS) return 0;
+    int nb = 0,i;
+    if (n->turn == 12 && n->result == DRAW_PARTY)
+        return 1;
+    for (i = 0; i < n->nbChildren; i++)
+        nb += computeDraws(n->children[i]);
     return nb;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

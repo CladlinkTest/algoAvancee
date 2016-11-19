@@ -29,7 +29,7 @@ typedef struct gameboard
 typedef struct node
 {
   char idCell; // NB : a char is sufficient because the board has 13 cells.
-  char turn; // NB : a char is sufficent because there are at most 12 turns.
+  char turn; // NB : a char is suffiscent because there are at most 12 turns.
   char result;
   struct node** children;
   char nbChildren; // NB :  a char is sufficient because there are at most 12 children
